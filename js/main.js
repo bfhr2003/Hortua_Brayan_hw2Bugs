@@ -2,7 +2,8 @@ const theButtons = document.querySelectorAll("#buttonHolder img"),
     puzzleBoard = document.querySelector(".puzzle-board"),
     puzzlePieces = document.querySelectorAll(".puzzle-pieces img"),
     dropZones = document.querySelectorAll(".drop-zone"),
-    dragZone = document.querySelector(".puzzle-pieces");
+    dragZone = document.querySelector(".puzzle-pieces"),
+    resetButton = document.querySelector("#resetBut");
 
 let draggedPiece;
 
@@ -29,9 +30,17 @@ function handleDrop(e) {
     console.log("dropped something on me");
 }
 
+function resetPuzzle() {
+    dropZones.forEach((dropZone) => {
+        if (dropZone.children.length > 0) {
+            const puzzlePiece = dropZone.removeChild(dropZone.children[0]);
+            dragZone.appendChild(puzzlePiece);
+        }
+    });
+}
 
 
-//event Listeners
+
 theButtons.forEach(button => button.addEventListener("click", changeBGImage)); 
 
 puzzlePieces.forEach(piece => piece.addEventListener("dragstart", handleStartDrag));
@@ -39,3 +48,5 @@ puzzlePieces.forEach(piece => piece.addEventListener("dragstart", handleStartDra
 dropZones.forEach(zone => zone.addEventListener("dragover", handleDragOver));
 
 dropZones.forEach(zone => zone.addEventListener("drop", handleDrop));
+
+resetButton.addEventListener("click", resetPuzzle);
